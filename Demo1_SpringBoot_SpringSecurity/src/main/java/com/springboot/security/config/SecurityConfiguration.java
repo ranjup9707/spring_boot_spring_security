@@ -7,12 +7,9 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.springboot.security.service.UserInfoUserDetailService;
@@ -23,6 +20,7 @@ import com.springboot.security.service.UserInfoUserDetailService;
 public class SecurityConfiguration
 {
 	
+	/* Authentication - User Detail to be placed here */
 	@Bean
 	public UserDetailsService userDetailService() {
 		return new UserInfoUserDetailService();
@@ -33,6 +31,7 @@ public class SecurityConfiguration
 		return new BCryptPasswordEncoder();
 	}
 	
+	/* Restrication to api, etc */
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf().disable()
@@ -47,6 +46,5 @@ public class SecurityConfiguration
 		provider.setUserDetailsService(userDetailService());
 		provider.setPasswordEncoder(passwordEncoder());
 		return provider;
-	}
-	
+	}	
 }
